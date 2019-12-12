@@ -1,6 +1,6 @@
 {
   "name": "env.sh",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Load environment variables from .env file",
   "main": "index.js",
   "repository": {
@@ -15,5 +15,6 @@
     "config"
   ],
   "author": "Yanglin <i@yangl.in>",
-  "license": "MIT"
+  "license": "MIT",
+  "homepage": "http://jslang.org"
 }
