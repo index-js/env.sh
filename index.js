@@ -7,7 +7,9 @@ const warn = str => {
     console.warn(log)
 }
 
-const parse = (input = '', debug = false) => {
+const parse = (input = '', options = {}) => {
+    const debug = !!options.debug
+
     input = input.toString()
     if (input.indexOf('\r') && debug) warn(`Cannot contain newline "\\r", setfileformat=unix`)
 
@@ -35,7 +37,7 @@ const config = (options = {}) => {
     const encoding = options.encoding || 'utf8'
     const debug = !!options.debug
 
-    const parsed = parse(fs.readFileSync(envPath, encoding), debug)
+    const parsed = parse(fs.readFileSync(envPath, encoding), { debug })
     Object.keys(parsed).forEach(key => {
         if (Object.prototype.hasOwnProperty.call(process.env, key)) {
             warn(`"${key}" is already defined`)

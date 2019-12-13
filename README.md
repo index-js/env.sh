@@ -1,6 +1,11 @@
 # env.sh
 > Load environment variables from .env file
 
+In file `".env"`, Add environment-specific variables on new lines in the form of `KEY=VALUE`.
+
+`KEY` can only contain letters, numbers and underscores, `VALUE` contains special characters (such as spaces) must be quoted, and there must be no spaces around `"="`
+
+
 
 ## Installation
 
@@ -20,8 +25,7 @@ As early as possible in your application, require and configure.
 require('env.sh').config()
 ```
 
-Create a `.env` file in the root directory of your project. Add
-environment-specific variables on new lines in the form of `KEY=VALUE`.
+Create a `.env` file in the root directory of your project.
 For example:
 
 ```dosini
@@ -115,7 +119,6 @@ The parsing engine currently supports the following rules:
 
 - empty lines are skipped
 - lines beginning with `#` are treated as comments
-- value with space ​​need to be quoted
 - `FooBar=foorbar` becomes `{FooBar: 'foobar'}`
 - empty values become empty strings (`EMPTY=` becomes `{EMPTY: ''}`)
 - inner quotes are maintained (think JSON) (`JSON='{"foo": "bar"}'` becomes `{JSON:"{\"foo\": \"bar\"}"`)
