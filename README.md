@@ -5,6 +5,8 @@ In file `".env"`, Add environment-specific variables on new lines in the form of
 
 `KEY` can only contain letters, numbers and underscores, `VALUE` contains special characters (such as spaces) must be quoted, and there must be no spaces around `"="`
 
+Therefore, the file `".env"` can be defined in process.env and run directly as `shell`.
+
 
 
 ## Installation
@@ -122,8 +124,7 @@ The parsing engine currently supports the following rules:
 - `FooBar=foorbar` becomes `{FooBar: 'foobar'}`
 - empty values become empty strings (`EMPTY=` becomes `{EMPTY: ''}`)
 - inner quotes are maintained (think JSON) (`JSON='{"foo": "bar"}'` becomes `{JSON:"{\"foo\": \"bar\"}"`)
-- whitespace is removed from both ends of unquoted values (see more on [`trim`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim)) (`FOO='some value'` becomes `{FOO: 'some value'}`)
-- single and double quoted values are escaped (`SINGLE_QUOTE='quoted'` becomes `{SINGLE_QUOTE: "quoted"}`)
+- single and double quoted values are removed
 
 
 
