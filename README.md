@@ -5,7 +5,7 @@ In file `".env"`, Add environment-specific variables on new lines in the form of
 
 `KEY` can only contain letters, numbers and underscores, `VALUE` contains special characters (such as spaces) must be quoted, and there must be no spaces around `"="`
 
-Therefore, the file `".env"` can be defined in process.env and run directly as `shell`.
+Therefore, the file `".env"` can be defined in [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env) and run directly as `shell`.
 
 
 
@@ -123,8 +123,8 @@ The parsing engine currently supports the following rules:
 - lines beginning with `#` are treated as comments
 - `FooBar=foorbar` becomes `{FooBar: 'foobar'}`
 - empty values become empty strings (`EMPTY=` becomes `{EMPTY: ''}`)
-- inner quotes are maintained (think JSON) (`JSON='{"foo": "bar"}'` becomes `{JSON:"{\"foo\": \"bar\"}"`)
 - single and double quoted values are removed
+- inner quotes are maintained (think JSON) (`JSON='{"foo": "bar"}'` becomes `{JSON:"{\"foo\": \"bar\"}"`)
 
 
 
