@@ -15,7 +15,7 @@ const parse = (input = '', options = {}) => {
 
     return input.split(/\r?\n/).map(line => line.trim()).reduce((all, line, index) => {
         if (line) {
-            const match = line.match(/([A-Z\d_]+)(\s*=\s*)(.*)/i)
+            const match = line.match(/^([A-Z\d_]+)(\s*=\s*)(.*)/i)
             if (match) {
                 let [$, key, sign, value] = match
                 if (sign !== '=' && debug) {
