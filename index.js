@@ -1,10 +1,8 @@
-const fs = require('fs')
+const FS = require('fs')
 
 
 const warn = str => {
-    let log = '\033[33m [env.sh] \033[0m'
-    log += str
-    console.warn(log)
+    console.warn(`[.env][DEBUG] ${str}`)
 }
 
 const parse = (input = '', options = {}) => {
@@ -18,15 +16,11 @@ const parse = (input = '', options = {}) => {
             const match = line.match(/^([A-Z\d_]+)(\s*=\s*)(.*)/i)
             if (match) {
                 let [$, key, sign, value] = match
-                if (sign !== '=' && debug) {
-                    warn(`No spaces before or after "=" on line ${ index + 1 }`)
-                }
+                if (sign !== '=' && debug) warn(`No spaces before or after "=" on line ${ index + 1 }`)
 
                 value = value.replace(/^(['"`])(.*)\1$/, '$2')
                 all[key] = value
-            } else if (debug) {
-                warn(`Line ${ index + 1 } did not match key and value`)
-            }
+            } else if (debug) warn(`Line ${ index + 1 } did not match key and value`)
         }
         return all
     }, {})
@@ -35,15 +29,11 @@ const parse = (input = '', options = {}) => {
 const config = (options = {}) => {
     const envPath = options.path || '.env'
     const encoding = options.encoding || 'utf8'
-    const debug = !!options.debug
 
-    const parsed = parse(fs.readFileSync(envPath, encoding), { debug })
+    const parsed = parse(FS.readFileSync(envPath, encoding), options)
     Object.keys(parsed).forEach(key => {
-        if (Object.prototype.hasOwnProperty.call(process.env, key)) {
-            warn(`"${key}" is already defined`)
-        } else {
-            process.env[key] = parsed[key]
-        }
+        if (process.env.hasOwnProperty(key)) warn(`"${key}" is already defined`)
+        else process.env[key] = parsed[key]
     })
 
     return parsed
