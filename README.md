@@ -68,16 +68,6 @@ You may specify a custom path if your file containing environment variables is l
 require('env.sh').config({ path: '/custom/path/to/.env' })
 ```
 
-#### Encoding
-
-Default: `utf8`
-
-You may specify the encoding of your file containing environment variables.
-
-```js
-require('env.sh').config({ encoding: 'latin1' })
-```
-
 #### Debug
 
 Default: `false`
@@ -97,22 +87,8 @@ an Object with the parsed keys and values.
 
 ```js
 const buf = Buffer.from('FooBar=foobar')
-const config = require('env.sh').parse(buf) // will return an object
+const config = require('env.sh').parse(buf, /* debug = false */) // will return an object
 console.log(typeof config, config) // object { FooBar : 'foobar' }
-```
-
-### Options
-
-#### Debug
-
-Default: `false`
-
-You may turn on logging to help debug why certain keys or values are not being set as you expect.
-
-```js
-const buf = Buffer.from('hello world')
-const config = require('env.sh').parse(buf, { debug: true })
-// expect a debug message because the buffer is not in KEY=VAL form
 ```
 
 ### Rules

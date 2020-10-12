@@ -5,11 +5,9 @@ const warn = str => {
     console.warn(`[.env][DEBUG] ${str}`)
 }
 
-const parse = (input = '', options = {}) => {
-    const debug = !!options.debug
-
+const parse = (input = '', debug = false) => {
     input = input.toString()
-    if (input.indexOf('\r') && debug) warn(`Cannot contain newline "\\r", setfileformat=unix`)
+    if (debug && input.indexOf('\r\n')) warn(`Change CRLF to LF`)
 
     return input.split(/\r?\n/).map(line => line.trim()).reduce((all, line, index) => {
         if (line) {
@@ -28,9 +26,12 @@ const parse = (input = '', options = {}) => {
 
 const config = (options = {}) => {
     const envPath = options.path || '.env'
-    const encoding = options.encoding || 'utf8'
+    const debug = options.debug || false
 
-    const parsed = parse(FS.readFileSync(envPath, encoding), options)
+    const str = FS.readFileSync(envPath, 'utf8')
+    if (debug && str.startsWith('\uFEFF')) warn(`Use UTF-8 without BOM`)
+
+    const parsed = parse(str, debug)
     Object.keys(parsed).forEach(key => {
         if (process.env.hasOwnProperty(key)) warn(`"${key}" is already defined`)
         else process.env[key] = parsed[key]
