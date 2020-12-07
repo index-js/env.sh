@@ -65,7 +65,7 @@ Default: `.env`
 You may specify a custom path if your file containing environment variables is located elsewhere.
 
 ```js
-require('env.sh').config({ path: '/custom/path/to/.env' })
+require('env.sh').config({ path: 'path/to/.env' })
 ```
 
 #### Debug
@@ -96,9 +96,12 @@ console.log(typeof config, config) // object { FooBar : 'foobar' }
 The parsing engine currently supports the following rules:
 
 - empty lines are skipped
-- lines beginning with `#` are treated as comments
+- behind with `#` are treated as comments
 - `FooBar=foorbar` becomes `{FooBar: 'foobar'}`
+- value trim
 - empty values become empty strings (`EMPTY=` becomes `{EMPTY: ''}`)
+- unicode supported
+- value contains spaces or $ requires single quotes
 - single and double quoted values are removed
 - inner quotes are maintained (think JSON) (`JSON='{"foo": "bar"}'` becomes `{JSON:"{\"foo\": \"bar\"}"`)
 
