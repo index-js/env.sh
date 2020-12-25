@@ -95,16 +95,12 @@ console.log(typeof config, config) // object { FooBar : 'foobar' }
 
 The parsing engine currently supports the following rules:
 
-- empty lines are skipped
-- behind with `#` are treated as comments
+- lines beginning with `#` are treated as comments
 - `FooBar=foorbar` becomes `{FooBar: 'foobar'}`
 - value trim
-- empty values become empty strings (`EMPTY=` becomes `{EMPTY: ''}`)
-- unicode supported
-- value contains spaces or $ requires single quotes
-- single and double quoted values are removed
-- inner quotes are maintained (think JSON) (`JSON='{"foo": "bar"}'` becomes `{JSON:"{\"foo\": \"bar\"}"`)
-
+- `JSON='{"foo": "bar"}'` becomes `{JSON:'{"foo": "bar"}'`
+- value contains `space` or `$` requires single quotes
+- single and double quoted wrapper are removed
 
 
 ## Authors

@@ -11,15 +11,16 @@ const parse = (input = '', debug = false) => {
 
     return input.split(/\r?\n/).map(line => line.trim()).reduce((all, line, index) => {
         if (line) {
-            const match = line.match(/^\s*([A-Z\d_]+)(\s*=\s*)([^#]*)/i)
+            const match = line.match(/^\s*([A-Z\d_]+)(\s*=\s*)(['"`])?(.*)\3/i)
             if (match) {
-                let [$, key, sign, value] = match
-                if (sign !== '=' && debug) warn(`No spaces before or after "=" on line ${ index + 1 }`)
+                let [$, key, sign, quote, value] = match
+                if (sign !== '=' && debug) warn(`No spaces before or after "=" on line ${index + 1}`)
 
-                value = value.trim()
-                value = value.replace(/^(['"`])(.*)\1$/, '$2')
+                // Single line comment
+                if (!quote) value = value.replace(/\s#.*$/, '').trim()
+
                 all[key] = value
-            } else if (debug) warn(`Line ${ index + 1 } did not match key and value`)
+            } else if (debug) warn(`Line ${index + 1} did not match key and value`)
         }
         return all
     }, {})
@@ -46,3 +47,5 @@ module.exports = {
     parse,
     config
 }
+
+console.log(config())
