@@ -47,5 +47,3 @@ module.exports = {
     parse,
     config
 }
-
-console.log(config())
